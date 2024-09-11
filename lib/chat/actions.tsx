@@ -128,9 +128,7 @@ async function submitUserMessage(content: string) {
   const result = await streamUI({
     model: openai('gpt-3.5-turbo'),
     initial: <SpinnerMessage />,
-    system: `You are a grant manager for the NEAR Protocol infrastructure committee, tasked with writing comprehensive and technical Request For Proposals (RFPs). As Pagoda (formerly NEAR Inc.) transitions away from critical infrastructure within the NEAR ecosystem, your RFPs must clearly communicate the needs and expectations for potential contractors.
-All threads and responses should be put into example prompt 
-Your RFP should include the following sections:
+    system: `Your RFP should include the following sections:
 Overview: Provide a concise summary of the infrastructure component and its significance to the NEAR ecosystem.
 Problem Statement: Articulate the current challenges or gaps in the infrastructure that necessitate this RFP, emphasizing the potential impact on the ecosystem.
 Requirements: Technical Stack
@@ -212,7 +210,32 @@ Required Experience
 Experience: Proven experience in {relevant experience based on aforementioned stack}, preferably within the blockchain or fintech sectors. Experience working with NEAR Protocol is a plus.
 Portfolio: Examples of previous work and case studies demonstrating success in similar projects.
 Team: A skilled team comprising developers, testers, and support staff with relevant experience.
-Relevant Business: Your team has an existing business that would motivate you to continue building this infrastructure`,
+Relevant Business: Your team has an existing business that would motivate you to continue building this infrastructure
+Process
+Proposal Process
+
+For a full details on the on-chain submission process for Proposals to the Infrastructure committee
+You should submit a proposal in response to this RFP on the Infrastructure Committee Portal. Here is a standard template you can use as a starting point. Please make a copy on your own Google Drive if you wish to edit it. You are encouraged to add additional sections as required. It might be good to add here: "The Q&A period is until 1st Sept, where interested parties can seek clarifications via TG/email and ask questions about the RFP."
+Marketing materials, presentations, and images can be attached as needed as external links.
+Here is a Markup template.
+Dates
+The deadline for proposal submission is {proposal deadline date}
+Selection Process
+After reviewing the proposals, the committee will vote on the best one. Generally, this process takes two working weeks to complete and will be discussed and voted on at the regular bi-weekly meeting.
+General note that may or may not be relevant for this one - we could create a standard for how proposals will be evaluated by the infra committee, like weightage for various factors such as cost, process, past experience, tech expertise, etc.
+Dates
+The estimate for voting completion is {2 weeks after the proposal deadline date}.
+Funding Process
+The Infrastructure Committee governs funding with assistance from the NEAR Foundation. If selected, your proposal enters the funding pipeline. You are required to:
+Complete the KYC/B process conducted by the NEAR Foundation, including verification by IDVerify.
+Sign a legal agreement regarding the work as outlined in the proposal, conducted by the NEAR Foundation.
+Submit an invoice to NEAR Foundation Finance outlining how you want funds disbursed, to what wallets or banks, and in the agreed-upon amounts.
+Complete a test transaction to verify target wallets (when requesting funds in cryptocurrency).
+Dates
+The funding process is generally completed in one working week if the proposal does not require clarifications in the budget, work approach, legal agreement, or invoicing terms.
+Communication
+Please direct all communications to the thread where the RFP started beneath the submitted proposal. Please direct confidential or sensitive communications to the Telegram group set up between the committee and the organization/entity/team. If you don't have a private Telegram group between your team and the Infrastructure Committee, please request one in this thread.
+`,
     messages: [
       ...aiState.get().messages.map((message: any) => ({
         role: message.role,
