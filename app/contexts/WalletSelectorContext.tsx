@@ -60,7 +60,7 @@ export const WalletSelectorContextProvider: React.FC<{
       network: "mainnet",
       debug: true,
       modules: [
-        setupNightly(),
+        setupNightly() as any,
         setupMyNearWallet(),
         setupHereWallet(),
         setupMeteorWallet(),
@@ -101,10 +101,10 @@ export const WalletSelectorContextProvider: React.FC<{
 
     const subscription = selector.store.observable
       .pipe(
-        map((state) => state.accounts),
+        map((state:any) => state.accounts),
         distinctUntilChanged()
       )
-      .subscribe((nextAccounts) => {
+      .subscribe((nextAccounts:any) => {
         console.log("Accounts Update", nextAccounts);
 
         setAccounts(nextAccounts);
