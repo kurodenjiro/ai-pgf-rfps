@@ -12,19 +12,14 @@ export function SignOutButton() {
         const wallet = await selector.wallet();
         setIsLoggingOut(true)
         wallet.signOut()
-        .then(()=>{
-            
-        })
-        .catch((err: string) => {
-            console.log("Failed to sign out");
-            console.error(err);
-        });
+            .then(() => {
+                formRef.current?.requestSubmit();
+            })
+            .catch((err: string) => {
+                console.log("Failed to sign out");
+                console.error(err);
+            });
     };
-    useEffect(() => {
-        if (accountId) {
-            formRef.current?.requestSubmit();
-        }
-    }, [accountId])
 
     return (
 
