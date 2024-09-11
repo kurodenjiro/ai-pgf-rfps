@@ -89,9 +89,8 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
         {
           id: nanoid(),
           role: 'system',
-          content: `[User has purchased ${amount} shares of ${symbol} at ${price}. Total cost = ${
-            amount * price
-          }]`
+          content: `[User has purchased ${amount} shares of ${symbol} at ${price}. Total cost = ${amount * price
+            }]`
         }
       ]
     })
@@ -129,21 +128,91 @@ async function submitUserMessage(content: string) {
   const result = await streamUI({
     model: openai('gpt-3.5-turbo'),
     initial: <SpinnerMessage />,
-    system: `\
-    You are a stock trading conversation bot and you can help users buy stocks, step by step.
-    You and the user can discuss stock prices and the user can adjust the amount of stocks they want to buy, or place an order, in the UI.
-    
-    Messages inside [] means that it's a UI element or a user event. For example:
-    - "[Price of AAPL = 100]" means that an interface of the stock price of AAPL is shown to the user.
-    - "[User has changed the amount of AAPL to 10]" means that the user has changed the amount of AAPL to 10 in the UI.
-    
-    If the user requests purchasing a stock, call \`show_stock_purchase_ui\` to show the purchase UI.
-    If the user just wants the price, call \`show_stock_price\` to show the price.
-    If you want to show trending stocks, call \`list_stocks\`.
-    If you want to show events, call \`get_events\`.
-    If the user wants to sell stock, or complete another impossible task, respond that you are a demo and cannot do that.
-    
-    Besides that, you can also chat with users and do some calculations if needed.`,
+    system: `You are a grant manager for the NEAR Protocol infrastructure committee, tasked with writing comprehensive and technical Request For Proposals (RFPs). As Pagoda (formerly NEAR Inc.) transitions away from critical infrastructure within the NEAR ecosystem, your RFPs must clearly communicate the needs and expectations for potential contractors.
+All threads and responses should be put into example prompt 
+Your RFP should include the following sections:
+Overview: Provide a concise summary of the infrastructure component and its significance to the NEAR ecosystem.
+Problem Statement: Articulate the current challenges or gaps in the infrastructure that necessitate this RFP, emphasizing the potential impact on the ecosystem.
+Requirements: Technical Stack
+Budget Guidelines: Detail the total grant amount, payment schedule, and any specific cost breakdowns or restrictions.
+Required Experience: List the skills, technologies, and prior project experience necessary for bidders, highlighting any specific experience with the NEAR ecosystem.
+Existing Usage: Provide current usage statistics and mention key ecosystem projects or partners that rely on this infrastructure.
+Transition Steps: Outline the process for transitioning infrastructure from Pagoda, including testing, documentation, and knowledge transfer requirements.
+Proposal Process: Submission Deadline
+Objective:
+Your goal is to create a clear, engaging, and informative RFP from responses entailing details about a build that attracts qualified teams capable of maintaining and enhancing the NEAR ecosystem's infrastructure. Ensure that the language is professional yet accessible, encouraging innovation and collaboration among potential bidders.
+Between these lines are information about the specific RFP (replace information into the template
+Here is a template
+NAME OF PROPOSAL
+Overview
+The {Funder-name} is seeking proposals for the {development, maintenance} of a {description of projects}. This {name of project} should {description of functionality}. The goal is to {goal of such a service and potential tidbit about significance of transition}.
+Problem Statement
+Paragraph format. First, establish the problem. Who it affects. How the solution aims to address this gap. What this solution will do to advance the ecosystem.
+Requirements
+Project Details
+Describe an overview of the Infrastructure. This is where to include high-level diagrams and any relevant links.
+This outlines specific technical details, functional requirements, high-level overview, and any documentation.
+Compatibility & cross-platform support: {standards, compatibility}
+Security: {any security standards, status operation pages}
+User Experience: {any relevant user experience}
+Documentation: {add details about providing comprehensive documentation support}
+Support: {support and maintenance requirements for contract}
+Performance: {add performance metrics}
+Open Source: Making the SDK open source to foster community contributions and transparency.
+Optional Requirements
+These are additional features that would be beneficial but are not mandatory.
+[Enter features here]
+We encourage applicants to propose additional features that are not included in the requirements but are considered by them as important.
+Technology Guidelines
+Technology Guidelines:
+Programming Languages:{ preferred technology based on specficiations}
+Frameworks: {outline specific frameworks the infrastructure uses}.
+API Standards: {outline specific API standards}.
+Testing: Include automated testing (unit, integration, and end-to-end tests) to ensure reliability and stability, including CI & CD and continuous security best practices for code and infra. {add any relevant QA, testing frameworks}
+Service Level Agreements 
+Availability
+Uptime Guarantee: 99.0% monthly uptime
+Downtime Allowance: Up to _____ of downtime per month
+Performance
+This are tracked internally and shared with Infrastructure Committee (IC) 
+Response Time:
+Based on prior metrics
+Rate Limiting:
+As defined in the rate limit plan with gradual reductions
+Rate Limit Enforcement: Strict enforcement with immediate rate limit application once thresholds are reached
+Support
+Support Availability: Community-based support only (e.g., through forums, GitHub issues, or a developer community Slack/Telegram/Discord channel)
+Response Time: No guaranteed response time, but best-effort responses within 24-48 hours
+Data Integrity
+Data Consistency: 
+Updates and Changes
+Notice for Breaking Changes: At least 7 days' notice for any breaking changes in the API or infrastructure
+Limitations
+No SLA Credits: No financial credits or compensation for outages or performance issues. This is, to the users.
+Fair Use Policy: Provide Explicit statements about the intended use for development and the prohibition of production workloads
+Termination Rights: The right to suspend or terminate the service for users who exceed fair use or misuse the service. IC must be informed about these.
+
+Transition Steps
+Review and understand the {tech stack} and processes.
+Include detailed transition plan,in your milestones
+Set up necessary access and permissions for the new team.
+Conduct knowledge transfer sessions with the current Pagoda team.
+Implement and test any necessary changes or improvements to the infrastructure.
+Perform thorough testing to ensure data integrity and system performance.
+Update all relevant documentation..
+Gradually transition operational responsibilities.
+Establish new support channels and processes.
+Conduct a final review and handover with the Infrastructure Committee.
+Conduct official communications on your channels and with the NEAR Developer ecosystems and relevant stakeholders
+Budget Guidelines
+Funding Range: Proposals should outline a detailed budget
+Breakdown: A clear breakdown of costs, including development, testing, documentation, maintenance, and support. Maintenance cost should be calculated accurately based on provided usage information and existing software costs. Note being able top properly assess a budget based on usage is a major factor for qualifying legitimate vendors.
+Milestones: Budget linked to specific milestones to ensure transparency and accountability. Payment may also be linked to service performance metrics.  We recommend payment for half annual expected operating budget given current cost for your organization. As part of this proposal maintaining this service as a public good for x amount of time and slowly phasing this out to a paid plan. Be explicit in your proposal for this.de a contingency plan for potential overruns or unexpected expenses.In the event that expense for providing free or a public good to the NEAR ecosystem, there should be a clear policy to report expenses incurred by NEAR usage to cover additional costs and prove that costs exceeded previous budgets. 
+Required Experience
+Experience: Proven experience in {relevant experience based on aforementioned stack}, preferably within the blockchain or fintech sectors. Experience working with NEAR Protocol is a plus.
+Portfolio: Examples of previous work and case studies demonstrating success in similar projects.
+Team: A skilled team comprising developers, testers, and support staff with relevant experience.
+Relevant Business: Your team has an existing business that would motivate you to continue building this infrastructure`,
     messages: [
       ...aiState.get().messages.map((message: any) => ({
         role: message.role,
@@ -176,306 +245,306 @@ async function submitUserMessage(content: string) {
 
       return textNode
     },
-    tools: {
-      listStocks: {
-        description: 'List three imaginary stocks that are trending.',
-        parameters: z.object({
-          stocks: z.array(
-            z.object({
-              symbol: z.string().describe('The symbol of the stock'),
-              price: z.number().describe('The price of the stock'),
-              delta: z.number().describe('The change in price of the stock')
-            })
-          )
-        }),
-        generate: async function* ({ stocks }) {
-          yield (
-            <BotCard>
-              <StocksSkeleton />
-            </BotCard>
-          )
+    // tools: {
+    //   listStocks: {
+    //     description: 'List three imaginary stocks that are trending.',
+    //     parameters: z.object({
+    //       stocks: z.array(
+    //         z.object({
+    //           symbol: z.string().describe('The symbol of the stock'),
+    //           price: z.number().describe('The price of the stock'),
+    //           delta: z.number().describe('The change in price of the stock')
+    //         })
+    //       )
+    //     }),
+    //     generate: async function* ({ stocks }) {
+    //       yield (
+    //         <BotCard>
+    //           <StocksSkeleton />
+    //         </BotCard>
+    //       )
 
-          await sleep(1000)
+    //       await sleep(1000)
 
-          const toolCallId = nanoid()
+    //       const toolCallId = nanoid()
 
-          aiState.done({
-            ...aiState.get(),
-            messages: [
-              ...aiState.get().messages,
-              {
-                id: nanoid(),
-                role: 'assistant',
-                content: [
-                  {
-                    type: 'tool-call',
-                    toolName: 'listStocks',
-                    toolCallId,
-                    args: { stocks }
-                  }
-                ]
-              },
-              {
-                id: nanoid(),
-                role: 'tool',
-                content: [
-                  {
-                    type: 'tool-result',
-                    toolName: 'listStocks',
-                    toolCallId,
-                    result: stocks
-                  }
-                ]
-              }
-            ]
-          })
+    //       aiState.done({
+    //         ...aiState.get(),
+    //         messages: [
+    //           ...aiState.get().messages,
+    //           {
+    //             id: nanoid(),
+    //             role: 'assistant',
+    //             content: [
+    //               {
+    //                 type: 'tool-call',
+    //                 toolName: 'listStocks',
+    //                 toolCallId,
+    //                 args: { stocks }
+    //               }
+    //             ]
+    //           },
+    //           {
+    //             id: nanoid(),
+    //             role: 'tool',
+    //             content: [
+    //               {
+    //                 type: 'tool-result',
+    //                 toolName: 'listStocks',
+    //                 toolCallId,
+    //                 result: stocks
+    //               }
+    //             ]
+    //           }
+    //         ]
+    //       })
 
-          return (
-            <BotCard>
-              <Stocks props={stocks} />
-            </BotCard>
-          )
-        }
-      },
-      showStockPrice: {
-        description:
-          'Get the current stock price of a given stock or currency. Use this to show the price to the user.',
-        parameters: z.object({
-          symbol: z
-            .string()
-            .describe(
-              'The name or symbol of the stock or currency. e.g. DOGE/AAPL/USD.'
-            ),
-          price: z.number().describe('The price of the stock.'),
-          delta: z.number().describe('The change in price of the stock')
-        }),
-        generate: async function* ({ symbol, price, delta }) {
-          yield (
-            <BotCard>
-              <StockSkeleton />
-            </BotCard>
-          )
+    //       return (
+    //         <BotCard>
+    //           <Stocks props={stocks} />
+    //         </BotCard>
+    //       )
+    //     }
+    //   },
+    //   showStockPrice: {
+    //     description:
+    //       'Get the current stock price of a given stock or currency. Use this to show the price to the user.',
+    //     parameters: z.object({
+    //       symbol: z
+    //         .string()
+    //         .describe(
+    //           'The name or symbol of the stock or currency. e.g. DOGE/AAPL/USD.'
+    //         ),
+    //       price: z.number().describe('The price of the stock.'),
+    //       delta: z.number().describe('The change in price of the stock')
+    //     }),
+    //     generate: async function* ({ symbol, price, delta }) {
+    //       yield (
+    //         <BotCard>
+    //           <StockSkeleton />
+    //         </BotCard>
+    //       )
 
-          await sleep(1000)
+    //       await sleep(1000)
 
-          const toolCallId = nanoid()
+    //       const toolCallId = nanoid()
 
-          aiState.done({
-            ...aiState.get(),
-            messages: [
-              ...aiState.get().messages,
-              {
-                id: nanoid(),
-                role: 'assistant',
-                content: [
-                  {
-                    type: 'tool-call',
-                    toolName: 'showStockPrice',
-                    toolCallId,
-                    args: { symbol, price, delta }
-                  }
-                ]
-              },
-              {
-                id: nanoid(),
-                role: 'tool',
-                content: [
-                  {
-                    type: 'tool-result',
-                    toolName: 'showStockPrice',
-                    toolCallId,
-                    result: { symbol, price, delta }
-                  }
-                ]
-              }
-            ]
-          })
+    //       aiState.done({
+    //         ...aiState.get(),
+    //         messages: [
+    //           ...aiState.get().messages,
+    //           {
+    //             id: nanoid(),
+    //             role: 'assistant',
+    //             content: [
+    //               {
+    //                 type: 'tool-call',
+    //                 toolName: 'showStockPrice',
+    //                 toolCallId,
+    //                 args: { symbol, price, delta }
+    //               }
+    //             ]
+    //           },
+    //           {
+    //             id: nanoid(),
+    //             role: 'tool',
+    //             content: [
+    //               {
+    //                 type: 'tool-result',
+    //                 toolName: 'showStockPrice',
+    //                 toolCallId,
+    //                 result: { symbol, price, delta }
+    //               }
+    //             ]
+    //           }
+    //         ]
+    //       })
 
-          return (
-            <BotCard>
-              <Stock props={{ symbol, price, delta }} />
-            </BotCard>
-          )
-        }
-      },
-      showStockPurchase: {
-        description:
-          'Show price and the UI to purchase a stock or currency. Use this if the user wants to purchase a stock or currency.',
-        parameters: z.object({
-          symbol: z
-            .string()
-            .describe(
-              'The name or symbol of the stock or currency. e.g. DOGE/AAPL/USD.'
-            ),
-          price: z.number().describe('The price of the stock.'),
-          numberOfShares: z
-            .number()
-            .optional()
-            .describe(
-              'The **number of shares** for a stock or currency to purchase. Can be optional if the user did not specify it.'
-            )
-        }),
-        generate: async function* ({ symbol, price, numberOfShares = 100 }) {
-          const toolCallId = nanoid()
+    //       return (
+    //         <BotCard>
+    //           <Stock props={{ symbol, price, delta }} />
+    //         </BotCard>
+    //       )
+    //     }
+    //   },
+    //   showStockPurchase: {
+    //     description:
+    //       'Show price and the UI to purchase a stock or currency. Use this if the user wants to purchase a stock or currency.',
+    //     parameters: z.object({
+    //       symbol: z
+    //         .string()
+    //         .describe(
+    //           'The name or symbol of the stock or currency. e.g. DOGE/AAPL/USD.'
+    //         ),
+    //       price: z.number().describe('The price of the stock.'),
+    //       numberOfShares: z
+    //         .number()
+    //         .optional()
+    //         .describe(
+    //           'The **number of shares** for a stock or currency to purchase. Can be optional if the user did not specify it.'
+    //         )
+    //     }),
+    //     generate: async function* ({ symbol, price, numberOfShares = 100 }) {
+    //       const toolCallId = nanoid()
 
-          if (numberOfShares <= 0 || numberOfShares > 1000) {
-            aiState.done({
-              ...aiState.get(),
-              messages: [
-                ...aiState.get().messages,
-                {
-                  id: nanoid(),
-                  role: 'assistant',
-                  content: [
-                    {
-                      type: 'tool-call',
-                      toolName: 'showStockPurchase',
-                      toolCallId,
-                      args: { symbol, price, numberOfShares }
-                    }
-                  ]
-                },
-                {
-                  id: nanoid(),
-                  role: 'tool',
-                  content: [
-                    {
-                      type: 'tool-result',
-                      toolName: 'showStockPurchase',
-                      toolCallId,
-                      result: {
-                        symbol,
-                        price,
-                        numberOfShares,
-                        status: 'expired'
-                      }
-                    }
-                  ]
-                },
-                {
-                  id: nanoid(),
-                  role: 'system',
-                  content: `[User has selected an invalid amount]`
-                }
-              ]
-            })
+    //       if (numberOfShares <= 0 || numberOfShares > 1000) {
+    //         aiState.done({
+    //           ...aiState.get(),
+    //           messages: [
+    //             ...aiState.get().messages,
+    //             {
+    //               id: nanoid(),
+    //               role: 'assistant',
+    //               content: [
+    //                 {
+    //                   type: 'tool-call',
+    //                   toolName: 'showStockPurchase',
+    //                   toolCallId,
+    //                   args: { symbol, price, numberOfShares }
+    //                 }
+    //               ]
+    //             },
+    //             {
+    //               id: nanoid(),
+    //               role: 'tool',
+    //               content: [
+    //                 {
+    //                   type: 'tool-result',
+    //                   toolName: 'showStockPurchase',
+    //                   toolCallId,
+    //                   result: {
+    //                     symbol,
+    //                     price,
+    //                     numberOfShares,
+    //                     status: 'expired'
+    //                   }
+    //                 }
+    //               ]
+    //             },
+    //             {
+    //               id: nanoid(),
+    //               role: 'system',
+    //               content: `[User has selected an invalid amount]`
+    //             }
+    //           ]
+    //         })
 
-            return <BotMessage content={'Invalid amount'} />
-          } else {
-            aiState.done({
-              ...aiState.get(),
-              messages: [
-                ...aiState.get().messages,
-                {
-                  id: nanoid(),
-                  role: 'assistant',
-                  content: [
-                    {
-                      type: 'tool-call',
-                      toolName: 'showStockPurchase',
-                      toolCallId,
-                      args: { symbol, price, numberOfShares }
-                    }
-                  ]
-                },
-                {
-                  id: nanoid(),
-                  role: 'tool',
-                  content: [
-                    {
-                      type: 'tool-result',
-                      toolName: 'showStockPurchase',
-                      toolCallId,
-                      result: {
-                        symbol,
-                        price,
-                        numberOfShares
-                      }
-                    }
-                  ]
-                }
-              ]
-            })
+    //         return <BotMessage content={'Invalid amount'} />
+    //       } else {
+    //         aiState.done({
+    //           ...aiState.get(),
+    //           messages: [
+    //             ...aiState.get().messages,
+    //             {
+    //               id: nanoid(),
+    //               role: 'assistant',
+    //               content: [
+    //                 {
+    //                   type: 'tool-call',
+    //                   toolName: 'showStockPurchase',
+    //                   toolCallId,
+    //                   args: { symbol, price, numberOfShares }
+    //                 }
+    //               ]
+    //             },
+    //             {
+    //               id: nanoid(),
+    //               role: 'tool',
+    //               content: [
+    //                 {
+    //                   type: 'tool-result',
+    //                   toolName: 'showStockPurchase',
+    //                   toolCallId,
+    //                   result: {
+    //                     symbol,
+    //                     price,
+    //                     numberOfShares
+    //                   }
+    //                 }
+    //               ]
+    //             }
+    //           ]
+    //         })
 
-            return (
-              <BotCard>
-                <Purchase
-                  props={{
-                    numberOfShares,
-                    symbol,
-                    price: +price,
-                    status: 'requires_action'
-                  }}
-                />
-              </BotCard>
-            )
-          }
-        }
-      },
-      getEvents: {
-        description:
-          'List funny imaginary events between user highlighted dates that describe stock activity.',
-        parameters: z.object({
-          events: z.array(
-            z.object({
-              date: z
-                .string()
-                .describe('The date of the event, in ISO-8601 format'),
-              headline: z.string().describe('The headline of the event'),
-              description: z.string().describe('The description of the event')
-            })
-          )
-        }),
-        generate: async function* ({ events }) {
-          yield (
-            <BotCard>
-              <EventsSkeleton />
-            </BotCard>
-          )
+    //         return (
+    //           <BotCard>
+    //             <Purchase
+    //               props={{
+    //                 numberOfShares,
+    //                 symbol,
+    //                 price: +price,
+    //                 status: 'requires_action'
+    //               }}
+    //             />
+    //           </BotCard>
+    //         )
+    //       }
+    //     }
+    //   },
+    //   getEvents: {
+    //     description:
+    //       'List funny imaginary events between user highlighted dates that describe stock activity.',
+    //     parameters: z.object({
+    //       events: z.array(
+    //         z.object({
+    //           date: z
+    //             .string()
+    //             .describe('The date of the event, in ISO-8601 format'),
+    //           headline: z.string().describe('The headline of the event'),
+    //           description: z.string().describe('The description of the event')
+    //         })
+    //       )
+    //     }),
+    //     generate: async function* ({ events }) {
+    //       yield (
+    //         <BotCard>
+    //           <EventsSkeleton />
+    //         </BotCard>
+    //       )
 
-          await sleep(1000)
+    //       await sleep(1000)
 
-          const toolCallId = nanoid()
+    //       const toolCallId = nanoid()
 
-          aiState.done({
-            ...aiState.get(),
-            messages: [
-              ...aiState.get().messages,
-              {
-                id: nanoid(),
-                role: 'assistant',
-                content: [
-                  {
-                    type: 'tool-call',
-                    toolName: 'getEvents',
-                    toolCallId,
-                    args: { events }
-                  }
-                ]
-              },
-              {
-                id: nanoid(),
-                role: 'tool',
-                content: [
-                  {
-                    type: 'tool-result',
-                    toolName: 'getEvents',
-                    toolCallId,
-                    result: events
-                  }
-                ]
-              }
-            ]
-          })
+    //       aiState.done({
+    //         ...aiState.get(),
+    //         messages: [
+    //           ...aiState.get().messages,
+    //           {
+    //             id: nanoid(),
+    //             role: 'assistant',
+    //             content: [
+    //               {
+    //                 type: 'tool-call',
+    //                 toolName: 'getEvents',
+    //                 toolCallId,
+    //                 args: { events }
+    //               }
+    //             ]
+    //           },
+    //           {
+    //             id: nanoid(),
+    //             role: 'tool',
+    //             content: [
+    //               {
+    //                 type: 'tool-result',
+    //                 toolName: 'getEvents',
+    //                 toolCallId,
+    //                 result: events
+    //               }
+    //             ]
+    //           }
+    //         ]
+    //       })
 
-          return (
-            <BotCard>
-              <Events props={events} />
-            </BotCard>
-          )
-        }
-      }
-    }
+    //       return (
+    //         <BotCard>
+    //           <Events props={events} />
+    //         </BotCard>
+    //       )
+    //     }
+    //   }
+    // }
   })
 
   return {
