@@ -10,6 +10,13 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.53",
+    "@near-wallet-selector/bitte-wallet": "^8.9.12",
+    "@near-wallet-selector/core": "^8.9.12",
+    "@near-wallet-selector/here-wallet": "^8.9.12",
+    "@near-wallet-selector/meteor-wallet": "^8.9.12",
+    "@near-wallet-selector/modal-ui": "^8.9.12",
+    "@near-wallet-selector/my-near-wallet": "^8.9.12",
+    "@near-wallet-selector/nightly": "^8.9.12",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",

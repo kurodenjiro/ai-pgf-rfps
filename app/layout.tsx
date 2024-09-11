@@ -1,3 +1,4 @@
+
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 
@@ -7,6 +8,8 @@ import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
 import { Toaster } from '@/components/ui/sonner'
+import { WalletSelectorContextProvider } from "@/app/contexts/WalletSelectorContext"
+import "@near-wallet-selector/modal-ui/styles.css";
 
 export const metadata = {
   metadataBase: process.env.VERCEL_URL
@@ -52,11 +55,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
-          </div>
-          <TailwindIndicator />
+          <WalletSelectorContextProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
+            </div>
+            <TailwindIndicator />
+          </WalletSelectorContextProvider>
         </Providers>
       </body>
     </html>
