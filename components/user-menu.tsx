@@ -26,9 +26,9 @@ export function UserMenu({ user }: UserMenuProps) {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="pl-0">
             <div className="flex size-7 shrink-0 select-none items-center justify-center rounded-full bg-muted/50 text-xs font-medium uppercase text-muted-foreground">
-              {getUserInitials(user.email)}
+              {getUserInitials(user.email).replace('@mail.com','')}
             </div>
-            <span className="ml-2 hidden md:block">{user.email}</span>
+            <span className="ml-2 hidden md:block">{user.email.replace('@mail.com','')}</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent sideOffset={8} align="start" className="w-fit">
@@ -36,7 +36,7 @@ export function UserMenu({ user }: UserMenuProps) {
             <div className="text-xs text-zinc-500">{user.email}</div>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <SignOutButton></SignOutButton>
+          <SignOutButton />
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
